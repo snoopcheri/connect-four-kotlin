@@ -22,6 +22,11 @@ application {
     applicationDefaultJvmArgs += "-ea"
 }
 
+val run by tasks.getting(JavaExec::class) {
+    standardInput = System.`in`
+    standardOutput = System.out
+}
+
 tasks {
     compileKotlin {
         kotlinOptions {
@@ -29,6 +34,7 @@ tasks {
             freeCompilerArgs = freeCompilerArgs + "-Xinline-classes" + "-Xopt-in=kotlin.ExperimentalStdlibApi,kotlin.time.ExperimentalTime"
         }
     }
+
     compileTestKotlin {
         kotlinOptions.jvmTarget = VERSION_11.majorVersion
     }
