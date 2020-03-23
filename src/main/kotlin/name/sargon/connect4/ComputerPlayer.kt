@@ -20,7 +20,7 @@ class ComputerPlayer: Player {
             val move = moves.next()
 
             board.place(move)
-            val score = -negamax.search(board, -1000, +1000, 10)
+            val score = -negamax.search(board, -1000, +1000, 12)
             board.unplace(move)
 
             val namedMove = NamedSquare.getByValue(move)

@@ -38,8 +38,8 @@ class Board {
     }
 
     fun unplace(square: Square) {
-        assert(sideToMove == EQUES || knottPieces.get(square))
-        assert(sideToMove == KNOTT || equesPieces.get(square))
+        assert(sideToMove == EQUES || equesPieces.get(square))
+        assert(sideToMove == KNOTT || knottPieces.get(square))
 
         when (sideToMove) {
             EQUES -> { knottPieces = knottPieces.cleared(square); knottEval -= evalValues[square] }
