@@ -1,0 +1,6 @@
+#IntelliJ
+/.idea/workspace.xml
+
+#Gradle
+/.gradle/
+/build/
