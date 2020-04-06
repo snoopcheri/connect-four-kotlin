@@ -19,9 +19,7 @@ class Negamax(private val evaluator: Evaluator, private val moveGenerator: MoveG
 
         val moves = moveGenerator.moves(board).weightedIterator()
 
-        while (moves.hasNext()) {
-            val move = moves.next()
-
+        for (move in moves) {
             board.place(move)
             val score = -search(board, -beta, -best, depth - 1)
             board.unplace(move)

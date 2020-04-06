@@ -14,11 +14,8 @@ class ComputerPlayer: Player {
         var bestMove: Square = -1
         nodes = 0L
 
-        val moves = board.moves().iterator()
-
-        while (moves.hasNext()) {
-            val move = moves.next()
-
+        val moves = board.moves().weightedIterator()
+        for (move in moves) {
             board.place(move)
             val score = -negamax.search(board, -1000, +1000, 12)
             board.unplace(move)
