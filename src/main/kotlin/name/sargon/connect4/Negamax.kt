@@ -17,7 +17,7 @@ class Negamax(private val evaluator: Evaluator, private val moveGenerator: MoveG
             return -100
         }
 
-        val moves = moveGenerator.moves(board).weightedIterator()
+        val moves = moveGenerator.moves(board)
 
         for (move in moves) {
             board.place(move)

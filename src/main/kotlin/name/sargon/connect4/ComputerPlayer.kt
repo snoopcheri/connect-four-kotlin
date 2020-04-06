@@ -7,14 +7,15 @@ fun countNode() {
 }
 
 class ComputerPlayer: Player {
-    private val negamax = Negamax(DefaultEvaluator(), DefaultMoveGenerator(), ::countNode)
+    private val moveGenerator = WeightedMoveGenerator()
+    private val negamax = Negamax(DefaultEvaluator(), moveGenerator, ::countNode)
 
     override fun nextMove(board: Board): Square {
         var best = -1000
         var bestMove: Square = -1
         nodes = 0L
 
-        val moves = board.moves().weightedIterator()
+        val moves = moveGenerator.moves(board)
         for (move in moves) {
             board.place(move)
             val score = -negamax.search(board, -1000, +1000, 12)

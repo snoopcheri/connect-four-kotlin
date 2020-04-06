@@ -2,6 +2,6 @@ package name.sargon.connect4
 
 interface MoveGenerator {
 
-    fun moves(board: Board): Bitboard
+    fun moves(board: Board): Iterator<Int>
 
 }
