@@ -3,6 +3,7 @@ package name.sargon.connect4
 import name.sargon.connect4.Bitboards.FULL_BOARD
 import name.sargon.connect4.Side.EQUES
 import name.sargon.connect4.Side.KNOTT
+import java.security.SecureRandom
 
 class Board {
 
@@ -16,19 +17,33 @@ class Board {
         3, 4, 5, 5, 4, 3, 0, 0
     )
 
+    val equesZobristKeys: LongArray
+    val knottZobristKeys: LongArray
+
+    init {
+        equesZobristKeys = randomLongs().toLongArray()
+        knottZobristKeys = randomLongs().toLongArray()
+    }
+
+    private fun randomLongs(): List<Long> {
+        val random = SecureRandom()
+        return (1..64).map { random.nextLong() }
+    }
+
     var equesPieces: Bitboard = Bitboard()
     var knottPieces: Bitboard = Bitboard()
     var sideToMove: Side = EQUES
     var equesEval = 0
     var knottEval = 0
+    var hash: Long = 0
 
-    fun place(square: Square) {
+    fun doMove(square: Square) {
         assert(!equesPieces.get(square))
         assert(!knottPieces.get(square))
 
         when (sideToMove) {
-            EQUES -> placeEques(square)
-            KNOTT -> placeKnott(square)
+            EQUES -> doMoveForEques(square)
+            KNOTT -> doMoveForKnott(square)
         }
 
         sideToMove = sideToMove.opponent()
@@ -37,36 +52,40 @@ class Board {
         assert(knottPieces == knottPieces.and(FULL_BOARD))
     }
 
-    private fun placeEques(square: Square) {
+    private fun doMoveForEques(square: Square) {
         equesPieces = equesPieces.set(square)
         equesEval += evalValues[square]
+        hash = hash xor equesZobristKeys[square]
     }
 
-    private fun placeKnott(square: Square) {
+    private fun doMoveForKnott(square: Square) {
         knottPieces = knottPieces.set(square)
         knottEval += evalValues[square]
+        hash = hash xor knottZobristKeys[square]
     }
 
-    fun unplace(square: Square) {
+    fun undoMove(square: Square) {
         assert(sideToMove == EQUES || equesPieces.get(square))
         assert(sideToMove == KNOTT || knottPieces.get(square))
 
         when (sideToMove) {
-            EQUES -> unplaceKnott(square)
-            KNOTT -> unplaceEques(square)
+            EQUES -> undoMoveForKnott(square)
+            KNOTT -> undoMoveForEques(square)
         }
 
         sideToMove = sideToMove.opponent()
     }
 
-    private fun unplaceEques(square: Square) {
+    private fun undoMoveForEques(square: Square) {
         equesPieces = equesPieces.cleared(square)
         equesEval -= evalValues[square]
+        hash = hash xor equesZobristKeys[square]
     }
 
-    private fun unplaceKnott(square: Square) {
+    private fun undoMoveForKnott(square: Square) {
         knottPieces = knottPieces.cleared(square)
         knottEval -= evalValues[square]
+        hash = hash xor knottZobristKeys[square]
     }
 
     private fun sideAt(square: Square): Side? {

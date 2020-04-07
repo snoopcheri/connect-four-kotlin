@@ -18,9 +18,9 @@ class ComputerPlayer : Player {
 
         val moves = moveGenerator.moves(board)
         for (move in moves) {
-            board.place(move)
+            board.doMove(move)
             val score = -negamax.search(board, -1000, +1000, 12)
-            board.unplace(move)
+            board.undoMove(move)
 
             val namedMove = NamedSquare.getByValue(move)
             println("-> move $namedMove has score $score")

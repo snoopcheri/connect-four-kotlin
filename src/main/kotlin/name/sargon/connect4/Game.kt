@@ -24,7 +24,7 @@ class Game(private val eques: Player, private val knott: Player) {
 
             println("Duration: $duration")
 
-            board.place(move)
+            board.doMove(move)
         }
 
         println(board)

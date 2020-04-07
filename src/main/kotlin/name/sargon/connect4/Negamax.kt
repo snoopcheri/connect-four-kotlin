@@ -24,9 +24,11 @@ class Negamax(
         val moves = moveGenerator.moves(board)
 
         for (move in moves) {
-            board.place(move)
+            val hash = board.hash
+            board.doMove(move)
             val score = -search(board, -beta, -best, depth - 1)
-            board.unplace(move)
+            board.undoMove(move)
+            assert(board.hash == hash)
 
             if (score >= beta) {
                 return beta
