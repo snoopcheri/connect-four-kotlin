@@ -29,7 +29,7 @@ object Bitboards {
 
 }
 
-inline class Bitboard(val value: Long = 0): Iterable<Int> {
+inline class Bitboard(val value: Long = 0) : Iterable<Int> {
 
     fun countOnes(): Int = value.countOneBits()
     fun get(bit: Int): Boolean = (value and 1L.shl(bit)) != 0L
@@ -68,6 +68,7 @@ inline class Bitboard(val value: Long = 0): Iterable<Int> {
     fun weightedIterator(): Iterator<Int> {
         return WeightedBitIterator(this)
     }
+
     /**
      * @see <a href="https://github.com/qu1j0t3/fhourstones/blob/master/Connect4.java#L96-L110">Algorithm</a>
      */
@@ -130,7 +131,7 @@ inline class Bitboard(val value: Long = 0): Iterable<Int> {
 }
 
 
-class BitIterator(private var bitboard: Bitboard): Iterator<Int> {
+class BitIterator(private var bitboard: Bitboard) : Iterator<Int> {
     override fun hasNext(): Boolean {
         return !bitboard.isEmpty()
     }
@@ -145,7 +146,7 @@ class BitIterator(private var bitboard: Bitboard): Iterator<Int> {
 }
 
 
-class WeightedBitIterator(bitboard: Bitboard): Iterator<Int> {
+class WeightedBitIterator(bitboard: Bitboard) : Iterator<Int> {
     private val weightedBits = IntArray(bitboard.countOnes())
     private var idx = 0
 

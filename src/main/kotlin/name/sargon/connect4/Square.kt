@@ -3,7 +3,7 @@ package name.sargon.connect4
 typealias Square = Int
 
 @Suppress("unused")
-enum class NamedSquare(val value:Int) {
+enum class NamedSquare(val value: Int) {
 
     A1(0 + 8 * 0),
     A2(1 + 8 * 0),

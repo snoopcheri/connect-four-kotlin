@@ -1,9 +1,9 @@
 package name.sargon.connect4
 
-class HumanPlayer: Player {
+class HumanPlayer : Player {
 
     override fun nextMove(board: Board): Square {
-        while(true) {
+        while (true) {
             print("Your move: ")
             val userInput = readLine()
 

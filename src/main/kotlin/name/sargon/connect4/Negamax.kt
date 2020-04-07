@@ -2,7 +2,11 @@ package name.sargon.connect4
 
 import java.lang.Integer.max
 
-class Negamax(private val evaluator: Evaluator, private val moveGenerator: MoveGenerator, private val updateNodeStatistics: () -> Unit) : Search {
+class Negamax(
+    private val evaluator: Evaluator,
+    private val moveGenerator: MoveGenerator,
+    private val updateNodeStatistics: () -> Unit
+) : Search {
 
     override fun search(board: Board, alpha: Int, beta: Int, depth: Int): Int {
         updateNodeStatistics()

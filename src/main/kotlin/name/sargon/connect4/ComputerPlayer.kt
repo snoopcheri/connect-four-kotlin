@@ -6,7 +6,8 @@ fun countNode() {
     nodes++
 }
 
-class ComputerPlayer: Player {
+class ComputerPlayer : Player {
+
     private val moveGenerator = WeightedMoveGenerator()
     private val negamax = Negamax(DefaultEvaluator(), moveGenerator, ::countNode)
 

@@ -1,6 +1,6 @@
 package name.sargon.connect4
 
-class WinLossEvaluator: Evaluator {
+class WinLossEvaluator : Evaluator {
 
     override fun evaluationOf(board: Board): Int {
         if (board.isWonFor(board.sideToMove)) {

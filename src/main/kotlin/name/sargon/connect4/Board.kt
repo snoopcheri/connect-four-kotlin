@@ -27,8 +27,12 @@ class Board {
         assert(!knottPieces.get(square))
 
         when (sideToMove) {
-            EQUES -> { equesPieces = equesPieces.set(square); equesEval += evalValues[square] }
-            KNOTT -> { knottPieces = knottPieces.set(square); knottEval += evalValues[square] }
+            EQUES -> {
+                equesPieces = equesPieces.set(square); equesEval += evalValues[square]
+            }
+            KNOTT -> {
+                knottPieces = knottPieces.set(square); knottEval += evalValues[square]
+            }
         }
 
         sideToMove = sideToMove.opponent()
@@ -42,8 +46,12 @@ class Board {
         assert(sideToMove == KNOTT || knottPieces.get(square))
 
         when (sideToMove) {
-            EQUES -> { knottPieces = knottPieces.cleared(square); knottEval -= evalValues[square] }
-            KNOTT -> { equesPieces = equesPieces.cleared(square); equesEval -= evalValues[square] }
+            EQUES -> {
+                knottPieces = knottPieces.cleared(square); knottEval -= evalValues[square]
+            }
+            KNOTT -> {
+                equesPieces = equesPieces.cleared(square); equesEval -= evalValues[square]
+            }
         }
 
         sideToMove = sideToMove.opponent()

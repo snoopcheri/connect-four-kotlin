@@ -3,7 +3,7 @@ package name.sargon.connect4
 import name.sargon.connect4.Side.EQUES
 import name.sargon.connect4.Side.KNOTT
 
-class DefaultEvaluator: Evaluator {
+class DefaultEvaluator : Evaluator {
 
     override fun evaluationOf(board: Board): Int {
         if (board.isWonFor(board.sideToMove)) {
