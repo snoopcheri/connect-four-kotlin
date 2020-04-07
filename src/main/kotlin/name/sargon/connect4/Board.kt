@@ -27,12 +27,8 @@ class Board {
         assert(!knottPieces.get(square))
 
         when (sideToMove) {
-            EQUES -> {
-                equesPieces = equesPieces.set(square); equesEval += evalValues[square]
-            }
-            KNOTT -> {
-                knottPieces = knottPieces.set(square); knottEval += evalValues[square]
-            }
+            EQUES -> placeEques(square)
+            KNOTT -> placeKnott(square)
         }
 
         sideToMove = sideToMove.opponent()
@@ -41,23 +37,39 @@ class Board {
         assert(knottPieces == knottPieces.and(FULL_BOARD))
     }
 
+    private fun placeEques(square: Square) {
+        equesPieces = equesPieces.set(square)
+        equesEval += evalValues[square]
+    }
+
+    private fun placeKnott(square: Square) {
+        knottPieces = knottPieces.set(square)
+        knottEval += evalValues[square]
+    }
+
     fun unplace(square: Square) {
         assert(sideToMove == EQUES || equesPieces.get(square))
         assert(sideToMove == KNOTT || knottPieces.get(square))
 
         when (sideToMove) {
-            EQUES -> {
-                knottPieces = knottPieces.cleared(square); knottEval -= evalValues[square]
-            }
-            KNOTT -> {
-                equesPieces = equesPieces.cleared(square); equesEval -= evalValues[square]
-            }
+            EQUES -> unplaceKnott(square)
+            KNOTT -> unplaceEques(square)
         }
 
         sideToMove = sideToMove.opponent()
     }
 
-    fun sideAt(square: Square): Side? {
+    private fun unplaceEques(square: Square) {
+        equesPieces = equesPieces.cleared(square)
+        equesEval -= evalValues[square]
+    }
+
+    private fun unplaceKnott(square: Square) {
+        knottPieces = knottPieces.cleared(square)
+        knottEval -= evalValues[square]
+    }
+
+    private fun sideAt(square: Square): Side? {
         if (equesPieces.get(square)) {
             return EQUES
         } else if (knottPieces.get(square)) {
